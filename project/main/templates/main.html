@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Головна - Комп'ютерні науки</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<script src="{% static 'js/main.js' %}"></script>
+<style>
+ 
+  </style>
+{% endblock %}
+
+{% block content %}
+
+  <div class="container">
+    <h1 class="mt-5 mb-3">Про програму</h1>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <a class="nav-link {% if active_tab == 'general-info' %}active{% endif %}" id="v-pills-general-info-tab" data-bs-toggle="pill" href="#v-pills-general-info" role="tab" aria-controls="v-pills-general-info" aria-selected="true">Загальна інформація</a>
+          <a class="nav-link {% if active_tab == 'specialties' %}active{% endif %}" id="v-pills-specialties-tab" data-bs-toggle="pill" href="#v-pills-specialties" role="tab" aria-controls="v-pills-specialties" aria-selected="false">Особливості спеціальності</a>
+          <a class="nav-link {% if active_tab == 'course-map' %}active{% endif %}" id="v-pills-course-map-tab" data-bs-toggle="pill" href="#v-pills-course-map" role="tab" aria-controls="v-pills-course-map" aria-selected="false">Карта курсів</a>
+          <a class="nav-link {% if active_tab == 'teachers' %}active{% endif %}" id="v-pills-teachers-tab" data-bs-toggle="pill" href="#v-pills-teachers" role="tab" aria-controls="v-pills-teachers" aria-selected="false">Викладачі</a>
+
+          </div>
+          
+      </div>
+      <div class="col-md-9">
+        <div class="tab-content" id="v-pills-tabContent">
+          <div class="tab-pane fade {% if active_tab == 'general-info' %}show active{% endif %}" id="v-pills-general-info" role="tabpanel" aria-labelledby="v-pills-general-info-tab">
+            <img src="{{ about_program.main_img.url }}" class="img-fluid" alt="Головне зображення">
+            <ul class="list-group">
+              {% for general_info in about_program.general_info.all %}
+                <li class="list-group-item"><span id="general-info-title">{{general_info.title}}:</span> {{ general_info.text }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="specialties-tab tab-pane fade {% if active_tab == 'specialties' %}show active{% endif %}" id="v-pills-specialties" role="tabpanel" aria-labelledby="v-pills-specialties-tab">
+            {% for feature in about_program.features.all %}
+                <h3>{{ feature.title }}</h3>
+                <hr>
+                <p>{{ feature.text }}</p>
+            {% endfor %}
+          </div>
+          <div class="tab-pane fade {% if active_tab == 'course-map' %}show active{% endif %}" id="v-pills-course-map" role="tabpanel" aria-labelledby="v-pills-course-map-tab">
+            <div class="legend">
+              <div class="legend-item humanitarian-block">
+                Гуманітарний блок
+              </div>
+              <div class="legend-item science-block">
+                Природничо-науковий блок
+              </div>
+              <div class="legend-item professional-block">
+                Фаховий блок
+              </div>
+              <div class="legend-item elective-disciplines">
+                Фахові дисципліни вільного вибору
+              </div>
+            </div>
+
+            <div class="pagination justify-content-center mt-4">
+              <nav>
+                <ul class="pagination">
+                  {% if semesters.has_previous %}
+                    <li class="page-item">
+                      <a class="page-link" href="?active_tab=course-map&page=1">«</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="?active_tab=course-map&page={{ semesters.previous_page_number }}">‹</a>
+                    </li>
+                  {% endif %}
+            
+                  <li class="page-item active">
+                    <a class="page-link" href="#">{{ semesters.number }} <span class="sr-only">(current)</span></a>
+                  </li>
+            
+                  {% if semesters.has_next %}
+                    <li class="page-item">
+                      <a class="page-link" href="?active_tab=course-map&page={{ semesters.next_page_number }}">›</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="?active_tab=course-map&page={{ semesters.paginator.num_pages }}">»</a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+
+            {% if semesters.number %}
+              <h2 class="academic-year-title"> {{ semesters.number }} навчальний рік </h2>
+            {% endif %}
+                      
+            <div class="grid-container">           
+              
+              <div class="credits-column" >
+                <div class="grid-item-sem" ><strong>Кредити</strong></div>
+                {% for i in credit_lines %}
+                  <div class="credit-tick">{{ i }}</div>
+                {% endfor %}
+              </div>
+              
+              {% for semester_number, semester in semesters %}
+                <div class="mobile-credits-column">
+                  <div class="grid-item-sem"><strong>Кредити</strong></div>
+                  {% for i in credit_lines %}
+                    <div class="credit-tick">{{ i }}</div>
+                  {% endfor %}
+                </div>
+            
+                <div class="flex-semester">
+                  <div class="grid-item-sem"><strong>{{ semester_number }} семестр</strong></div>
+                  {% for course in semester %}
+                    <div class="grid-item {% if course.block == 'Гуманітарний блок' %}humanitarian-block{% elif course.block == 'Природничо-науковий блок' %}science-block{% elif course.block == 'Фаховий блок' %}professional-block{% elif course.block == 'Фахові дисципліни вільного вибору' %}elective-disciplines{% endif %}" style="height: auto;" data-credits="{{ course.credits }}">
+                      <span><a href="{{ course.page_link }}" target="_blank">{{ course.name }}</a>
+                      {% for option in course.options.all %}
+                          /
+                          <a href="{{ option.page_link }}" target="_blank"> {{ option.name }}</a>
+                      {% endfor %}
+                      </span>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endfor %}
+            </div>
+
+            <div class="pagination justify-content-center mt-4">
+              <nav>
+                <ul class="pagination">
+                  {% if semesters.has_previous %}
+                    <li class="page-item">
+                      <a class="page-link" href="?active_tab=course-map&page=1">«</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="?active_tab=course-map&page={{ semesters.previous_page_number }}">‹</a>
+                    </li>
+                  {% endif %}
+            
+                  <li class="page-item active">
+                    <a class="page-link" href="#">{{ semesters.number }} <span class="sr-only">(current)</span></a>
+                  </li>
+            
+                  {% if semesters.has_next %}
+                    <li class="page-item">
+                      <a class="page-link" href="?active_tab=course-map&page={{ semesters.next_page_number }}">›</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="?active_tab=course-map&page={{ semesters.paginator.num_pages }}">»</a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+            
+            
+          </div>
+          <div class="tab-pane fade {% if active_tab == 'teachers' %}show active{% endif %}" id="v-pills-teachers" role="tabpanel" aria-labelledby="v-pills-teachers-tab">
+            <div class="row">
+              {% for teacher in page_obj %}
+              <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <img src="{{ teacher.image.url }}" class="card-img-top teacher-img" alt="{{ teacher.name }} {{ teacher.surname }}">
+                    <div class="card-body card-teacher">
+                        <h5 class="card-title card-title-adjust card-name">{{ teacher.name }} {{ teacher.surname }}</h5>
+                        <p class="card-text card-text-adjust card-position">{{ teacher.position }}</p>
+                        <p class="card-text card-text-adjust card-additional">
+                            {% if teacher.additional %}
+                                {{ teacher.additional }}
+                            {% else %}
+                                &nbsp;
+                            {% endif %}
+                        </p>
+                        <a href="{{ teacher.page_link }}" class="btn btn-primary" target="_blank">Детальніше</a>
+                    </div>
+                </div>
+            </div>
+            
+            
+              
+              
+              {% empty %}
+                <p>Немає викладачів.</p>
+              {% endfor %}
+            </div>
+            
+            <div class="pagination justify-content-center mt-4">
+              <nav>
+                  <ul class="pagination">
+                      {% if page_obj.has_previous %}
+                          <li class="page-item">
+                              <a class="page-link" href="?active_tab=teachers&page=1">&laquo; </a>
+                          </li>
+                          <li class="page-item">
+                              <a class="page-link" href="?active_tab=teachers&page={{ page_obj.previous_page_number }}">&lsaquo; </a>
+                          </li>
+                      {% endif %}
+              
+                      <li class="page-item active">
+                          <a class="page-link" href="#">{{ page_obj.number }} <span class="sr-only">(current)</span></a>
+                      </li>
+              
+                      {% if page_obj.has_next %}
+                          <li class="page-item">
+                              <a class="page-link" href="?active_tab=teachers&page={{ page_obj.next_page_number }}"> &rsaquo;</a>
+                          </li>
+                          <li class="page-item">
+                              <a class="page-link" href="?active_tab=teachers&page={{ page_obj.paginator.num_pages }}"> &raquo;</a>
+                          </li>
+                      {% endif %}
+                  </ul>
+              </nav>
+          </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+  
+<script>
+ 
+
+
+</script>
+
+
+
+{% endblock %}

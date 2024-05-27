@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Контакти - Комп'ютерні науки</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/contacts.css' %}">
+<style>
+  .responsive-iframe-container {
+    position: relative;
+    padding-bottom: 56.25%; /* Збереження співвідношення сторін 16:9 */
+    overflow: hidden;
+  }
+
+  .responsive-iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <h1>Контактна інформація</h1>
+  <hr>
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Адреса</h3>
+      <p>{{ contacts.address }}</p>
+      <hr>
+      <h3>Телефон</h3>
+      <p>{{ contacts.phone_number }}</p>
+      <hr>
+      <h3>Email</h3>
+      <p>{{ contacts.email }}</p>
+    </div>
+    <div class="col-md-6">
+      <div class="responsive-iframe-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2573.114267617488!2d24.019621175547737!3d49.84031043110859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473add717532da25%3A0x17c61a566a2a2a23!2z0KTQsNC60YPQu9GM0YLQtdGCINC_0YDQuNC60LvQsNC00L3QvtGXINC80LDRgtC10LzQsNGC0LjQutC4INGC0LAg0ZbQvdGE0L7RgNC80LDRgtC40LrQuCDQm9GM0LLRltCy0YHRjNC60L7Qs9C-INC90LDRhtGW0L7QvdCw0LvRjNC90L7Qs9C-INGD0L3RltCy0LXRgNGB0LjRgtC10YLRgyDRltC80LXQvdGWINCG0LLQsNC90LAg0KTRgNCw0L3QutCw!5e0!3m2!1suk!2sua!4v1685043727227!5m2!1suk!2sua" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <h3>Ми в соціальних мережах</h3>
+      <ul class="list-unstyled">
+        <li><a href="{{ contacts.instagram }}" id="instagramLink" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
+        <li><a href="{{ contacts.facebook }}" id="facebookLink" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container" >
+    <h1>Залиште свій відгук</h1>
+    <form method="POST" id="feedback-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="name">Ім'я:</label>
+          <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="surname">Прізвище:</label>
+          <input type="text" class="form-control" id="surname" name="surname" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="phone_number" cla>Номер телефону <span class="optional">(необов'язково)</span>:</label>
+          <input type="text" class="form-control" id="phone_number" name="phone_number">
+        </div>
+        <div class="form-group">
+          <label for="message">Відгук:</label>
+          <textarea class="form-control" id="message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary base-btn" id="btn-send">Надіслати</button>
+      </form>
+</div>
+      
+{% endblock %}

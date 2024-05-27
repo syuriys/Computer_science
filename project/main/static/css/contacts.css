@@ -1,0 +1,102 @@
+  ul.list-unstyled li {
+    margin-bottom: 10px;
+  }
+  
+  ul.list-unstyled li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  #instagramLink{
+    color:rgb(186, 36, 136);
+  }
+
+  #facebookLink{
+    color: #007bff;
+  }
+  
+  #instagramLink:hover, #facebookLink:hover{
+    color: grey;
+  }
+
+  ul.list-unstyled li a i {
+    margin-right: 10px;
+  }
+
+  .container {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    color: #203c84;
+  }
+
+  label{
+    color: #203c84;
+  }
+  
+  hr {
+    margin: 1rem 0;
+    border: 2px solid #1446c2;
+    border-radius: 5px;
+  }
+  
+  ul li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  #btn-send {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  #btn-send:hover {
+    background-color: #203c84;
+    border-color: #203c84;
+  }
+
+  @media only screen and (max-width: 480px) {
+    #btn-send{
+        width: 100%;
+    }
+  }
+
+   .optional {
+   
+    opacity: 0.6;
+  }
+
+  #feedback-form{
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1), 
+               0px -1px 2px rgba(0, 0, 0, 0.1), 
+               1px 0px 2px rgba(0, 0, 0, 0.1), 
+               -1px 0px 2px rgba(0, 0, 0, 0.1); 
+
+    padding: 16px;
+    border-radius: 4px;
+
+  }
+  
+
+  
+
+  

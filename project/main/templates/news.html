@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Новини - Комп'ютерні науки</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/news.css' %}">
+<script src="{% static 'js/news.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center mb-4">
+            <h1 class="text-center">Новини</h1>
+            <div class="ml-auto">
+                {% if order == 'publication_date' %}
+                    <a href="?order=-publication_date" class="btn btn-sm btn-secondary">Дата: за зростанням<i class="bi bi-arrow-up"></i></a>
+                {% else %}
+                    <a href="?order=publication_date" class="btn btn-sm btn-secondary">Дата: за спаданням<i class="bi bi-arrow-down"></i></a>
+                {% endif %}
+            </div>
+            <div class="container mt-3">
+                <form action="{% url 'news' %}?{{ search_order }}" method="GET" class="d-flex">
+                  <input class="form-control me-2" type="search" placeholder="Пошук за заголовком" aria-label="Search" name="search" value="{{ request.GET.search }}">
+                  <button class="btn btn-outline-primary" type="submit">Пошук</button>
+                </form>
+              </div>
+              
+        </div>
+        <div class="row">
+            {% for n in page_obj %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img class="card-img-top news-img" src="{{ n.images.first.image.url }}" alt="{{ n.title }}">
+                    <div class="card-body card-news">
+                        <h4 class="card-title card-title-adjust">{{ n.title }}</h4>
+                        <p class="card-text card-text-adjust">{{ n.content|striptags|truncatechars:200|safe}}</p>
+                        <div class="card-bottom">
+                            <small class="text-muted">{{ n.publication_date|date:'d E Y' }}</small>
+                            <a href="{% url 'news_details' pk=n.pk %}" class="btn btn-primary base-btn">Детальніше</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>Немає новин, що відповідають критеріям пошуку. <a href="{% url 'news' %}" class="btn btn-primary base-btn">Показати всі новини</a></p>
+
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+    <div class="pagination justify-content-center mt-4">
+        <nav>
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?order={{ order }}&page=1">&laquo; </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?order={{ order }}&page={{ page_obj.previous_page_number }}">&lsaquo; </a>
+                    </li>
+                {% endif %}
+        
+                <li class="page-item active">
+                    <a class="page-link" href="#">{{ page_obj.number }} <span class="sr-only">(current)</span></a>
+                </li>
+        
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?order={{ order }}&page={{ page_obj.next_page_number }}"> &rsaquo;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?order={{ order }}&page={{ page_obj.paginator.num_pages }}"> &raquo;</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+{% endblock %}

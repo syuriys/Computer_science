@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>{{ news_item.title }}</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/news_details.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <div class="container my-5">
+        <div class="news-header">
+            <h2 class="news-title">{{ news_item.title }}</h2>
+            <p class="news-date">{{ news_item.publication_date|date:"d E Y" }}</p>
+        </div>
+        <hr>
+
+        
+        {% if images|length > 1 %}
+            <div id="news-carousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    {% for image in images %}
+                        <button type="button"  data-bs-target="#news-carousel" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active" aria-current="true"{% endif %}></button>
+                    {% endfor %}
+                </div>
+                <div class="carousel-inner">
+                    {% for image in images %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %} " data-bs-interval="3000">
+                            <img src="{{ image.image.url }}" class="d-block w-100 img-responsive" alt="{{ news_item.title }}">
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#news-carousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#news-carousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+            </div>
+        {% else %}
+            {% if images %}
+            <div class="single-image">
+                <img src="{{ images.0.image.url }}" class="d-block w-100" alt="{{ news_item.title }}">
+            </div>
+            {% endif %}
+        {% endif %}
+        
+    
+        <div id="news_content">
+            {{ news_item.content|safe}}
+        </div>
+
+        <div id="back-to-news">
+            <a href="{% url 'news' %}" class="btn btn-primary">Назад до новин</a>
+        </div>
+
+    </div>
+{% endblock %}
+
+
+  

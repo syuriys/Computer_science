@@ -1,0 +1,36 @@
+.card:hover {
+    transform: translate(0, -5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+.btn-primary:hover {
+  background-color: #203c84;
+  border-color: #203c84;
+}
+
+.news-img{
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  object-position: center;
+}
+
+.card-news{
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.card-bottom{
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+  

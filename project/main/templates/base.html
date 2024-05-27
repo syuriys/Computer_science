@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="{% static 'js/base.js' %}"></script>
+    {% block head %}{% endblock %}
+  </head>
+  
+
+<body class="my-body">
+    <nav class="navbar navbar-expand-md navbar-light my-navbar">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'main' %}">
+            <div class="logo-container">
+              <img src="{% static 'images/logo.png' %}" class="logo" alt="Logo">
+              <div class="text-container">
+                <span class="logo-text">Комп'ютерні</span><span class="logo-text">науки</span>
+              </div>
+            </div>
+          </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a class="nav-link my-nav-link dropdown-toggle" href="{% url 'main' %}?active_tab=general-info" role="button" aria-expanded="false">
+                Головна
+              </a>
+              <ul class="dropdown-menu my-dropdown-menu" id="my-dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'main' %}?active_tab=general-info">Про програму</a></li>
+                <li><a class="dropdown-item" href="{% url 'main' %}?active_tab=specialties">Особливості спеціальності</a></li>
+                <li><a class="dropdown-item" href="{% url 'main' %}?active_tab=course-map">Карта курсів</a></li>
+                <li><a class="dropdown-item" href="{% url 'main' %}?active_tab=teachers&page=1">Викладачі</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link my-nav-link" href="{% url 'news' %}">Новини</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link my-nav-link" href="{% url 'contacts' %}">Контакти</a>
+            </li>
+          </ul>
+        </div>
+        </div>
+      </nav>
+      
+      {% block content %}{% endblock %}      
+
+      <footer class="footer sticky-footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <p>© 2024 Computer Science.</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      <a onclick="topFunction()" class="btn btn-primary rounded-circle" id="toTopBtn"><span class="bi bi-arrow-up"></span>  </a>  
+     
+      {% block scripts %} {% endblock %}
+     
+</body>
+</html>
+
+
+
+
+
+
+

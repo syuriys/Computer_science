@@ -1,0 +1,192 @@
+  
+  :root{
+    --color-blue: #203c84;
+  }
+
+  .nav-link{
+    color:var(--color-blue);
+  }
+
+  .card-teacher{
+    display: flex;
+    flex-direction: column;
+    
+  }
+
+  .card-teacher .btn{
+   margin-top: auto;
+  }
+  
+  .card:hover {
+      transform: translate(0, -5px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+  
+  .btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+  }
+    
+  .btn-primary:hover {
+    background-color: var(--color-blue);
+    border-color: var(--color-blue);
+  }
+      
+  .teacher-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: center;
+  }
+
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: 0.25fr repeat(2, 1fr); 
+    column-gap: 5px;
+  }
+  
+  .flex-semester {
+    display: flex;
+    flex-direction: column; 
+    border-collapse: collapse;
+  }
+  
+  .grid-item {
+    border: 1px solid var(--color-blue);
+    border-top: none;
+    padding: 8px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+  }
+
+  .grid-item-sem {
+    border: 1px solid var(--color-blue);
+    padding: 8px;
+    text-align: center;
+    color: var(--color-blue);
+  }
+
+  .humanitarian-block { background-color: #fde9d9; }
+  .science-block { background-color: #dce6f1; }
+  .professional-block { background-color: #ebf1de; }
+  .elective-disciplines { background-color: #c4d79b; }
+    
+  .legend {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px;
+  }
+  
+  .legend-item{
+      display: flex;
+      align-items: center; 
+      justify-content: center;
+      padding: 5px;
+      border-radius: 5px;
+      width: 20%;
+      text-align: center;
+      font-weight: 500;
+  }
+  
+    @media only screen and (max-width: 768px) {
+  
+  
+      .legend {
+        flex-direction: column; 
+        align-items: center; 
+      }
+  
+      .legend-item {
+        width: 80%; 
+
+      }
+    }
+  
+    @media only screen and (max-width: 480px) {
+      .grid-container {
+        grid-template-columns: 0.25fr 1fr; 
+      }
+      
+      .legend{
+        flex-direction: column;
+      }
+  
+      .legend-item {
+        width: 90%; 
+      }
+    } 
+
+  .credits-column .grid-item-sem{
+    border: none;
+    border-bottom: 1px solid #000000;
+  }
+  
+
+  .credit-tick {
+    border-bottom: 1px solid #000000;
+    border-right: 1px solid var(--color-blue); 
+    padding: 2px;
+    text-align: center;
+  }
+
+
+  hr {
+    margin: 5px 0;
+    border: 2px solid #1446c2;
+    border-radius: 5px;
+  }
+
+  .academic-year-title{    
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1); 
+  }
+
+  @media only screen and (max-width: 480px) {
+    .credits-column {
+      display: none; 
+    }
+    .mobile-credits-column {
+      display: block; 
+      margin-bottom: 20px;
+    }
+    .flex-semester {
+      margin-bottom: 20px; 
+    }
+  }
+
+  @media only screen and (min-width: 481px) {
+    .mobile-credits-column {
+      display: none; 
+    }
+  }
+  
+  .specialties-tab h3{
+    color: var(--color-blue)
+  }
+
+  .grid-item a{
+    text-decoration: none;
+    color:#000000
+  }
+
+  .grid-item a:hover{
+    color:#0d6efd;
+  }
+  
+  .text-blue{
+    color: var(--color-blue);
+  }
+
+  #general-info-title{
+    font-weight: 700;
+    color: var(--color-blue);
+  }
