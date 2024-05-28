@@ -94,38 +94,3 @@ def news_details(request, pk):
     return render(request, 'news_details.html', {'news_item': news_item, 'images': images})
 
 
-def course_table(request):
-    block_order = Case(
-        When(block='Природничо-науковий блок', then=Value(1)),
-        When(block='Фаховий блок', then=Value(2)),
-        When(block='Фахові дисципліни вільного вибору', then=Value(3)),
-        When(block='Гуманітарний блок', then=Value(4)),
-        default=Value(5),
-        output_field=IntegerField()
-    )
-
-    courses = Course.objects.all().annotate(
-        block_order=block_order).order_by('semester', 'block_order')
-
-    semesters = {i: [] for i in range(1, 9)}
-    for course in courses:
-        semesters[course.semester].append(course)
-
-    semester_numbers = list(range(1, 9))
-    credit_lines = list(range(1, 31))
-
-
-    paginator = Paginator(list(semesters.items()), 2)  
-    page = request.GET.get('page')
-
-    try:
-        semesters = paginator.page(page)
-    except PageNotAnInteger:
-        semesters = paginator.page(1)
-    except EmptyPage:
-        semesters = paginator.page(paginator.num_pages)
-
-    return render(request, 'course_table.html', {
-        'semesters': semesters,
-        'credit_lines': credit_lines
-    })
